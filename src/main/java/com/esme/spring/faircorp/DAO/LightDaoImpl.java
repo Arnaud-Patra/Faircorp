@@ -18,4 +18,21 @@ public class LightDaoImpl implements LightDaoCustom {
                 .setParameter("value", Status.ON)
                 .getResultList();
     }
+
+    @Override
+    public List<Light> findOnLightsAndId(){
+        String jpql = "select lt from Light lt, Room R where R.name.id = :value";
+        return em.createQuery(jpql, Light.class)
+                .setParameter("value", -10L)
+                .getResultList();
+    }
+
+    @Override
+    public List<Light> findOnLightsAndRooms(){
+        String jpql = "select lt from Light lt, Room R, Building G where R.name.id = :value and R.name = G.nameB.id";
+        return em.createQuery(jpql, Light.class)
+                .setParameter("value", -100L)
+                .getResultList();
+    }
+
 }

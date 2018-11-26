@@ -9,7 +9,6 @@ public class Light {
     @GeneratedValue
     private Long id;
 
-
     private Integer level;
 
     @Enumerated(EnumType.STRING)
@@ -29,7 +28,7 @@ public class Light {
         this.room = room;
     }
 
-    public Light( Integer level, Status status,Room room) {
+    public Light(Integer level, Status status,Room room) {
         this.room = room;
         this.level = level;
         this.status = status;

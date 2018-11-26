@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
 
+
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @ComponentScan
@@ -28,6 +29,18 @@ public class LightDaoImplTest {
                 .containsExactly(tuple(-1L, Status.ON));
     }
 
+    @Test
+    public void shouldFindOnLightsAndId() {
+        assertThat(lightDao.findOnLightsAndId())
+                .extracting("id")
+                .containsExactly(-2L,-1L);
+    }
 
+    @Test
+    public void shouldFindOnLightsAndRoom() {
+        assertThat(lightDao.findOnLightsAndRooms())
+                .extracting("id")
+                .containsExactly();
+    }
 
 }

@@ -3,14 +3,13 @@ package com.esme.spring.faircorp.model;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity // (1)
+@Entity
 public class Room {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    // (3)
     private Integer floor;
 
     @Column(nullable = false, length=255)
@@ -19,11 +18,24 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private Set<Light> lights;
 
+    @ManyToOne
+    private Building building;
 
     public Room() {
     }
 
-    public Room(Integer floor, String name) {
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
+
+
+
+    public Room(Integer floor, String name,Building building) {
+        this.building = building;
         this.floor = floor;
         this.name = name;
     }

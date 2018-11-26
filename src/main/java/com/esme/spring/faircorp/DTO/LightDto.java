@@ -1,7 +1,7 @@
-package com.esme.spring.faircorp.DAO;
-
+package com.esme.spring.faircorp.DTO;
 
 import com.esme.spring.faircorp.model.Light;
+import com.esme.spring.faircorp.model.Room;
 import com.esme.spring.faircorp.model.Status;
 
 public class LightDto {
@@ -10,7 +10,11 @@ public class LightDto {
     private final Integer level;
     private final Status status;
 
-    public LightDto() {
+    public LightDto(Long id, Integer level, Status status){
+        this.id = id;
+        this.level = level;
+        this.status = status;
+
     }
 
     public LightDto(Light light) {
@@ -29,5 +33,9 @@ public class LightDto {
 
     public Status getStatus() {
         return status;
+    }
+
+    public Long getRoomId() {
+        return ;
     }
 }
