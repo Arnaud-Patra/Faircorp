@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 //Delete building and rooms in it.
 //Switch lights.
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api/buildings")
 @Transactional

@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 /api/rooms/{room_id}/switchLight switch the room lights
 */
 @RestController
+@CrossOrigin
 @RequestMapping("/api/rooms")
 @Transactional
 public class RoomControler {
