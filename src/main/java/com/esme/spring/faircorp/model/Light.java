@@ -20,18 +20,20 @@ public class Light {
     public Light() {
     }
 
+
+
+    public Light(Integer level, Status status,Room room) {
+        this.room = room;
+        this.level = level;
+        this.status = status;
+    }
+
     public Room getRoom() {
         return room;
     }
 
     public void setRoom(Room room) {
         this.room = room;
-    }
-
-    public Light(Integer level, Status status,Room room) {
-        this.room = room;
-        this.level = level;
-        this.status = status;
     }
 
     public Long getId() {
@@ -57,5 +59,6 @@ public class Light {
     public void setStatus(Status status) {
         this.status = status;
     }
+
 
 }

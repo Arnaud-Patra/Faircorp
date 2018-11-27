@@ -28,14 +28,14 @@ public class LightDaoImplTest {
                 .extracting("id", "status")
                 .containsExactly(tuple(-1L, Status.ON));
     }
-
+/*
     @Test
     public void shouldFindOnLightsAndId() {
         assertThat(lightDao.findOnLightsAndId())
                 .extracting("id")
                 .containsExactly(-2L,-1L);
     }
-
+*/
     @Test
     public void shouldFindOnLightsAndRoom() {
         assertThat(lightDao.findOnLightsAndRooms())

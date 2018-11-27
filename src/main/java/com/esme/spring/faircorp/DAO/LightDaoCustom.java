@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface LightDaoCustom {
     List<Light> findOnLights();
-    List<Light> findOnLightsAndId();
+    List<Light> findOnLightsAndId(Long roomId);
     List<Light> findOnLightsAndRooms();
 }
