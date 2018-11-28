@@ -54,30 +54,19 @@ public class BuildingControler {
 
 
     @PutMapping(path = "/{id}/switch")
-    public void switchStatus(@PathVariable Long id) {
-
+    public List<Light>  switchStatus(@PathVariable Long id) {
+        List<Light> TotalLights = null;
         List<Room> roomList =  roomDao.findByBuildingId(id);
         for (Room room : roomList) {
-            System.out.println("RoomId = "+room.getId());//DEBUG
             List<Light> lightList = lightDao.findByRoomId(room.getId());
+            TotalLights.addAll(lightList);
             for (Light light : lightList) {
                 light.setStatus(light.getStatus() == Status.ON ? Status.OFF: Status.ON);
             }
 
         }
-
+        return TotalLights;
     }
-    /*
-    @PutMapping(path = "/{id}/switch")
-    public void switchStatus(@PathVariable Long id) {
-
-        List<Light> lightList =  lightDao.findOnLightsAndId(id);
-        for (Light light : lightList) {
-            light.setStatus(light.getStatus() == Status.ON ? Status.OFF: Status.ON);
-        }
-
-    }
-    */
 
     @PostMapping
     public BuildingDto create(@RequestBody BuildingDto dto) {

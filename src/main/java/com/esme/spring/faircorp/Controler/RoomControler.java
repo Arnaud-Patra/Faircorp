@@ -51,13 +51,13 @@ public class RoomControler {
     }
 
     @PutMapping(path = "/{id}/switch")
-    public void switchStatus(@PathVariable Long id) {
+    public List<Light>  switchStatus(@PathVariable Long id) {
 
         List<Light> lightList =  lightDao.findByRoomId(id);
         for (Light light : lightList) {
             light.setStatus(light.getStatus() == Status.ON ? Status.OFF: Status.ON);
         }
-
+        return lightList;
     }
 
 
