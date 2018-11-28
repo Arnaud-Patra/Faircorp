@@ -8,6 +8,7 @@ import com.esme.spring.faircorp.DTO.BuildingDto;
 import com.esme.spring.faircorp.model.Building;
 import com.esme.spring.faircorp.model.Light;
 import com.esme.spring.faircorp.model.Room;
+import com.esme.spring.faircorp.model.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,15 +52,32 @@ public class BuildingControler {
         return buildingDao.findById(id).map(building -> new BuildingDto(building)).orElse(null);
     }
 
-/*
-    @PutMapping(path = "/{id}/switch")
-    public LightDto switchStatus(@PathVariable Long id) {
-        Light light = lightDao.findById(id).orElseThrow(IllegalArgumentException::new);
-        light.setStatus(light.getStatus() == Status.ON ? Status.OFF: Status.ON);
-        return new LightDto(light);
-    }
-*/
 
+    @PutMapping(path = "/{id}/switch")
+    public void switchStatus(@PathVariable Long id) {
+
+        List<Room> roomList =  roomDao.findByBuildingId(id);
+        for (Room room : roomList) {
+            System.out.println("RoomId = "+room.getId());//DEBUG
+            List<Light> lightList = lightDao.findByRoomId(room.getId());
+            for (Light light : lightList) {
+                light.setStatus(light.getStatus() == Status.ON ? Status.OFF: Status.ON);
+            }
+
+        }
+
+    }
+    /*
+    @PutMapping(path = "/{id}/switch")
+    public void switchStatus(@PathVariable Long id) {
+
+        List<Light> lightList =  lightDao.findOnLightsAndId(id);
+        for (Light light : lightList) {
+            light.setStatus(light.getStatus() == Status.ON ? Status.OFF: Status.ON);
+        }
+
+    }
+    */
 
     @PostMapping
     public BuildingDto create(@RequestBody BuildingDto dto) {
@@ -81,19 +99,13 @@ public class BuildingControler {
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long id) {
         List<Room> roomList =  roomDao.findOnRoomsAndId(id);
-        for(int i = 0; i < roomList.size(); i++) {
-            Room room = roomList.get(i);
-
-            List<Light> lightList =  lightDao.findOnLightsAndId(room.getId());
-            for(int j = 0; j < lightList.size(); j++) {
-                Light light = lightList.get(j);
+        for (Room room : roomList) {
+            List<Light> lightList = lightDao.findOnLightsAndId(room.getId());
+            for (Light light : lightList) {
                 lightDao.deleteById(light.getId());
             }
-
             roomDao.deleteById(room.getId());
         }
-
-
         buildingDao.deleteById(id);
     }
 

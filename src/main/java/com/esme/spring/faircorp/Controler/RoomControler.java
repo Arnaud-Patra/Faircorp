@@ -4,7 +4,6 @@ package com.esme.spring.faircorp.Controler;
 import com.esme.spring.faircorp.DAO.BuildingDao;
 import com.esme.spring.faircorp.DAO.LightDao;
 import com.esme.spring.faircorp.DAO.RoomDao;
-import com.esme.spring.faircorp.DTO.LightDto;
 import com.esme.spring.faircorp.DTO.RoomDto;
 import com.esme.spring.faircorp.model.Light;
 import com.esme.spring.faircorp.model.Room;
@@ -52,10 +51,13 @@ public class RoomControler {
     }
 
     @PutMapping(path = "/{id}/switch")
-    public LightDto switchStatus(@PathVariable Long id) {
-        Light light = lightDao.findById(id).orElseThrow(IllegalArgumentException::new);
-        light.setStatus(light.getStatus() == Status.ON ? Status.OFF: Status.ON);
-        return new LightDto(light);
+    public void switchStatus(@PathVariable Long id) {
+
+        List<Light> lightList =  lightDao.findByRoomId(id);
+        for (Light light : lightList) {
+            light.setStatus(light.getStatus() == Status.ON ? Status.OFF: Status.ON);
+        }
+
     }
 
 
@@ -81,8 +83,7 @@ public class RoomControler {
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long id) {
         List<Light> lightList =  lightDao.findOnLightsAndId(id);
-        for(int i = 0; i < lightList.size(); i++) {
-            Light light = lightList.get(i);
+        for (Light light : lightList) {
             lightDao.deleteById(light.getId());
         }
         roomDao.deleteById(id);
