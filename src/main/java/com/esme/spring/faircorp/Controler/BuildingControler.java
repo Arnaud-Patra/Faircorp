@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,13 +56,13 @@ public class BuildingControler {
 
     @PutMapping(path = "/{id}/switch")
     public List<Light>  switchStatus(@PathVariable Long id) {
-        List<Light> TotalLights = null;
+        List<Light> TotalLights = new LinkedList<Light>();;
         List<Room> roomList =  roomDao.findByBuildingId(id);
         for (Room room : roomList) {
             List<Light> lightList = lightDao.findByRoomId(room.getId());
-            TotalLights.addAll(lightList);
             for (Light light : lightList) {
                 light.setStatus(light.getStatus() == Status.ON ? Status.OFF: Status.ON);
+                TotalLights.add(light);
             }
 
         }
