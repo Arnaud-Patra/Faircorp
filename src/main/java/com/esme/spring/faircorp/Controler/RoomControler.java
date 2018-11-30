@@ -79,10 +79,9 @@ public class RoomControler {
         return new RoomDto(room);
     }
 
-
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long id) {
-        List<Light> lightList =  lightDao.findOnLightsAndId(id);
+        List<Light> lightList =  lightDao.findByRoomId(id);
         for (Light light : lightList) {
             lightDao.deleteById(light.getId());
         }

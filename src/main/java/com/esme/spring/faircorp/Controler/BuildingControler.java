@@ -88,9 +88,9 @@ public class BuildingControler {
 
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long id) {
-        List<Room> roomList =  roomDao.findOnRoomsAndId(id);
+        List<Room> roomList =  roomDao.findByBuildingId(id);
         for (Room room : roomList) {
-            List<Light> lightList = lightDao.findOnLightsAndId(room.getId());
+            List<Light> lightList = lightDao.findByRoomId(room.getId());
             for (Light light : lightList) {
                 lightDao.deleteById(light.getId());
             }
